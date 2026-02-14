@@ -36,7 +36,6 @@ transition: background 1.2s ease;
     50% { opacity: 0.6; }
 }
 
-
 .nebula {
     position: fixed;
     top: 0;
@@ -236,7 +235,6 @@ z-index: 25;
 100%{opacity:0; transform:translate(var(--x),var(--y)) scale(0)}
 }
 
-/* Финальная сцена */
 .final-bg {
     position: fixed;
     top: 0;
@@ -254,7 +252,6 @@ z-index: 25;
     opacity: 1;
 }
 
-/* Космическая сцена для 1402 */
 body.cosmic-scene {
     background: radial-gradient(ellipse at center, #1a0a2e 0%, #0d051a 100%) !important;
 }
@@ -276,7 +273,6 @@ body.cosmic-scene .back:hover {
     color: #f0e6ff;
 }
 
-/* === СЦЕНА СЕРДЦА ДЛЯ avdeevvik === */
 #heartScene {
     display: flex;
     flex-direction: column;
@@ -291,6 +287,8 @@ body.cosmic-scene .back:hover {
     background: transparent;
     border-radius: 12px;
     box-shadow: 0 0 40px rgba(255, 100, 150, 0.3);
+    width: 500px; 
+    height: 500px; 
 }
 
 .heart-message {
@@ -325,37 +323,6 @@ body.cosmic-scene .back:hover {
     transform: scale(1);
     text-shadow: 0 0 15px rgba(255, 130, 180, 0.8);
 }
-
-
-#videoScene {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: #120016 !important;
-    padding: 20px;
-}
-
-.video-container {
-    width: 100%;
-    max-width: 500px;
-    margin: 20px auto;
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    height: 0;
-}
-
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 0 30px rgba(255, 100, 150, 0.3);
-}
-
 
 @media (max-width: 480px) {
     .scene {
@@ -428,10 +395,6 @@ body.cosmic-scene .back:hover {
     .hint.error {
         font-size: 14px;
     }
-    
-    .video-container {
-        padding-bottom: 65%; /* Для телефонов - больше высота */
-    }
 }
 
 @media (max-width: 320px) {
@@ -456,8 +419,10 @@ body.cosmic-scene .back:hover {
         font-size: 15px;
     }
     
-    .video-container {
-        padding-bottom: 75%;
+    #heartCanvas {
+        width: 90%;
+        height: auto;
+        max-width: 300px;
     }
 }
 </style>
@@ -495,7 +460,6 @@ body.cosmic-scene .back:hover {
     <div class="back" id="backFromHeart">← вернуться</div>
 </div>
 
-<!-- Сцена анимационного ролика для АркадийПаровозов -->
 <div class="scene" id="videoScene">
     <div class="video-container">
         <iframe src="https://www.youtube.com/embed/5jJq7y7b2yY?rel=0&modestbranding=1&showinfo=0" 
@@ -507,7 +471,6 @@ body.cosmic-scene .back:hover {
 </div>
 
 <script>
-// Создаём лепестки
 const leaves = [];
 for(let i=0; i<8; i++){
  const l=document.createElement("div");
@@ -520,7 +483,6 @@ for(let i=0; i<8; i++){
  document.body.appendChild(l);
 }
 
-
 function showLeaves() {
  leaves.forEach(l => l.style.display = 'block');
 }
@@ -528,7 +490,6 @@ function showLeaves() {
 function hideLeaves() {
  leaves.forEach(l => l.style.display = 'none');
 }
-
 
 function createCosmicScene() {
  document.querySelectorAll('.star').forEach(el => el.remove());
@@ -558,21 +519,19 @@ function cleanupCosmicScene() {
  document.body.classList.remove('cosmic-scene');
 }
 
-
 let heartAnimationRunning = false;
 let heartAnimationFrame = null;
 
 function drawValentineHeart() {
     const canvas = document.getElementById('heartCanvas');
     const ctx = canvas.getContext('2d');
+    
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const scale = 10;
     
-    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
- 
     const totalPoints = 2550;
     const duration = 6000;
     let startTime = null;
@@ -585,7 +544,6 @@ function drawValentineHeart() {
         return 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
     }
     
-   
     const colors = [
         {r: 255, g: 107, b: 157},
         {r: 255, g: 68, b: 102},
@@ -597,23 +555,20 @@ function drawValentineHeart() {
         {r: 255, g: 85, b: 153}
     ];
     
- 
     function animate(timestamp) {
         if (!startTime) startTime = timestamp;
         const elapsed = timestamp - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const currentPoint = Math.floor(progress * totalPoints);
         
-      
         for (let i = 0; i <= currentPoint; i++) {
             const t = (i / totalPoints) * 2 * Math.PI;
             const x = centerX + scale * xt(t);
             const y = centerY - scale * yt(t);
-
+            
             const colorIndex = Math.floor((i / totalPoints) * (colors.length - 1));
             const color = colors[colorIndex];
             
-     
             const variation = Math.sin(i * 0.01) * 15;
             const r = Math.max(0, Math.min(255, color.r + variation));
             const g = Math.max(0, Math.min(255, color.g + variation * 0.5));
@@ -663,7 +618,6 @@ function stopHeartAnimation() {
     document.getElementById('heartMessage').classList.remove('visible');
     document.getElementById('backFromHeart').classList.remove('show');
 }
-
 
 let heartInterval = null;
 
@@ -720,7 +674,7 @@ const scenes = {
 
  "avdeevvik": [],
 
- "АркадийПаровозов": [] // 
+ "АркадийПаровозов": [] // Пустой массив для видеосцены
 };
 
 let currentTexts = [];
@@ -780,29 +734,24 @@ codeInput.addEventListener("input", () => {
 
    setTimeout(() => {
      if(v === "1402"){
-      
        hideLeaves();
        createCosmicScene();
        textScene.classList.add("active");
        playTexts(0);
      } else if(v === "avdeevvik"){
-     
        hideLeaves();
        heartScene.classList.add("active");
        setTimeout(() => {
          drawValentineHeart();
        }, 300);
      } else if(v === "АркадийПаровозов"){
-       
        hideLeaves();
        videoScene.classList.add("active");
      } else if(v === "0510"){
-    
        showLeaves();
        textScene.classList.add("active");
        playTexts(0);
      } else {
-       // Для других сцен скрываем лепестки
        hideLeaves();
        textScene.classList.add("active");
        playTexts(0);
@@ -839,7 +788,6 @@ codeInput.addEventListener("keydown", (e) => {
  }
 });
 
-
 function playTexts(i){
  if(i >= currentTexts.length){
    if(isMainScene){
@@ -853,17 +801,12 @@ function playTexts(i){
    return;
  }
  
-
  textEl.textContent = currentTexts[i];
  textEl.style.opacity = 1;
  
-
  setTimeout(() => {
-  
    textEl.style.opacity = 0;
-   
-
-   setTimeout(() => {
+      setTimeout(() => {
      playTexts(i+1);
    }, 600);
  }, 3500);
@@ -877,7 +820,6 @@ function showFinal(){
  finalScene.classList.add("active");
  valentine.style.opacity = 1;
  
-
  hideLeaves();
  
  setTimeout(() => {
@@ -934,7 +876,6 @@ function backHome(){
   codeInput.value = "";
   lastValidInput = "";
   codeInput.focus();
- 
   showLeaves();
  }, 700);
 }
