@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💜</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+height:100vh;
+background:radial-gradient(circle at top,#2b1240,#120016);
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:system-ui,sans-serif;
+color:#fff;
+position:relative;
+transition: background 1.2s ease;
+}
+
+.star {
+    position: fixed;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.3;
+    animation: gentle-twinkle 8s infinite ease-in-out;
+}
+
+@keyframes gentle-twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.6; }
+}
+
+.nebula {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 30% 40%, rgba(180, 140, 255, 0.08) 0%, transparent 35%),
+        radial-gradient(circle at 70% 60%, rgba(255, 160, 200, 0.07) 0%, transparent 40%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.leaf{
+position:fixed;
+top:-40px;
+width:22px;
+height:22px;
+opacity:.6;
+animation:fall linear infinite;
+pointer-events:none;
+z-index: 5;
+}
+
+@keyframes fall{
+to{transform:translateY(120vh) rotate(160deg)}
+}
+
+.heart{
+position:fixed;
+width:20px;
+height:20px;
+pointer-events:none;
+opacity:.7;
+z-index: 8;
+top:0;
+left:0;
+}
+
+.scene{
+position:absolute;
+text-align:center;
+width:100%;
+max-width:360px;
+padding:20px;
+opacity:0;
+transition:opacity 1s ease;
+pointer-events:none;
+z-index: 20;
+}
+
+.scene.active{
+opacity:1;
+pointer-events:auto;
+}
+
+input{
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,0.15);
+border-radius:14px;
+padding:14px;
+font-size:18px;
+color:white;
+text-align:center;
+width:260px;
+outline:none;
+letter-spacing:2px;
+transition: all 0.3s ease;
+}
+
+input:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 180, 220, 0.5);
+    box-shadow: 0 0 12px rgba(255, 150, 200, 0.3);
+}
+
+input.error{
+    border-color: rgba(255, 100, 130, 0.8);
+    box-shadow: 0 0 15px rgba(255, 100, 130, 0.4);
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.hint{
+margin-top:12px;
+font-size:14px;
+opacity:.6;
+transition: opacity 0.3s ease;
+}
+
+.hint.error{
+    opacity: 1;
+    color: #ff8aa3;
+    font-size: 15px;
+    animation: pulse-text 0.8s ease;
+}
+
+@keyframes pulse-text {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.text{
+font-size:22px;
+line-height:1.45;
+opacity:0;
+transition:opacity 1.2s ease;
+white-space:pre-line;
+color: #f8e9f3;
+text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.card{
+margin:40px auto 0;
+width:260px;
+height:180px;
+background:linear-gradient(145deg, #ff9dc4, #f9b8d1);
+border-radius:20px;
+box-shadow:0 12px 35px rgba(255,100,150,.25);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+color:#7a2a40;
+position:relative;
+opacity:0;
+transition:opacity 1.2s ease, transform .3s;
+cursor:pointer;
+border: 2px solid rgba(255, 255, 255, 0.25);
+font-weight: 500;
+letter-spacing: -0.5px;
+}
+
+.card::before{
+content:"♥";
+position:absolute;
+top:-22px;
+font-size:24px;
+color:#ff85b5;
+opacity:0.9;
+}
+
+.card.pulse{
+animation:pulse 1s cubic-bezier(.34,.9,.3,1);
+box-shadow:0 15px 50px rgba(255,100,150,.45);
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+35%{transform:scale(1.12)}
+70%{transform:scale(0.98)}
+100%{transform:scale(1)}
+}
+
+.back{
+margin-top:22px;
+font-size:14px;
+opacity:.7;
+cursor:pointer;
+transition:.3s;
+color: #e0c5d8;
+}
+
+.back:hover{
+opacity:1; 
+color: white;
+}
+
+.spark{
+position:fixed;
+font-size:16px;
+pointer-events:none;
+animation:spark 1.2s ease-out forwards;
+z-index: 25;
+}
+
+@keyframes spark{
+0%{opacity:1; transform:translate(0,0) scale(1)}
+100%{opacity:0; transform:translate(var(--x),var(--y)) scale(0)}
+}
+
+.final-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #3a0a29 0%, #150010 100%);
+    z-index: 7;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+}
+
+.final-bg.active {
+    opacity: 1;
+}
+
+body.cosmic-scene {
+    background: radial-gradient(ellipse at center, #1a0a2e 0%, #0d051a 100%) !important;
+}
+
+body.cosmic-scene .text {
+    color: #e8d8f5;
+    text-shadow: 0 0 8px rgba(200, 160, 255, 0.3);
+}
+
+body.cosmic-scene .hint {
+    color: #c5a8e0;
+}
+
+body.cosmic-scene .back {
+    color: #d8c0e8;
+}
+
+body.cosmic-scene .back:hover {
+    color: #f0e6ff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="final-bg" id="finalBg"></div>
+<div class="nebula" id="nebula"></div>
+
+<div class="scene active" id="inputScene">
+<input id="code" placeholder="введите код" maxlength="16">
+<div class="hint" id="errorHint">ищи подсказки ✨</div>
+</div>
+
+<div class="scene" id="textScene">
+<div class="text" id="text"></div>
+<div class="back" id="backFromText">← вернуться</div>
+</div>
+
+<div class="scene" id="finalScene">
+<div class="card" id="valentine">С Днём Святого Валентина 💗</div>
+<div class="back" id="backBtn">← вернуться</div>
+</div>
+
+<script>
+const leaves = [];
+for(let i=0; i<8; i++){
+ const l=document.createElement("div");
+ l.className="leaf";
+ l.innerHTML=`<svg viewBox="0 0 64 64"><path fill="rgba(255,170,210,.75)" d="M32 2C20 14 6 26 6 40c0 12 10 22 26 22s26-10 26-22C58 26 44 14 32 2z"/></svg>`;
+ l.style.left=Math.random()*100+"vw";
+ l.style.animationDuration=18+Math.random()*10+"s";
+ l.style.animationDelay = Math.random()*5 + "s";
+ leaves.push(l);
+ document.body.appendChild(l);
+}
+
+
+function createCosmicScene() {
+ document.querySelectorAll('.star').forEach(el => el.remove());
+ 
+ for (let i = 0; i < 40; i++) {
+   const star = document.createElement('div');
+   star.className = 'star';
+   
+   const size = Math.random() * 1.8 + 0.4;
+   star.style.width = `${size}px`;
+   star.style.height = `${size}px`;
+   star.style.left = `${Math.random() * 100}vw`;
+   star.style.top = `${Math.random() * 100}vh`;
+   star.style.animationDelay = `${Math.random() * 8}s`;
+   star.style.opacity = 0.2 + Math.random() * 0.4;
+   
+   document.body.appendChild(star);
+ }
+ 
+ document.getElementById('nebula').style.opacity = '1';
+ document.body.classList.add('cosmic-scene');
+}
+
+function cleanupCosmicScene() {
+ document.querySelectorAll('.star').forEach(el => el.remove());
+ document.getElementById('nebula').style.opacity = '0';
+ document.body.classList.remove('cosmic-scene');
+}
+
+let heartInterval = null;
+
+function clearAllHearts() {
+ document.querySelectorAll('.heart').forEach(el => el.remove());
+}
+
+function spawnHeart(){
+ const el = document.createElement("div");
+ el.className = "heart";
+ el.innerHTML = `<svg viewBox="0 0 64 64"><path fill="rgba(255,110,160,.92)" d="M32 56s-20-12-26-24C0 18 12 6 24 12c4 2 8 6 8 6s4-4 8-6c12-6 24 6 18 20-6 12-26 24-26 24z"/></svg>`;
+ 
+ el.style.left = (Math.random() * innerWidth) + "px";
+ el.style.top = "-40px";
+ 
+ const duration = 3 + Math.random() * 2;
+ const delay = Math.random() * 0.5;
+ 
+ el.style.animation = `fallHeart ${duration}s linear ${delay}s forwards`;
+ 
+ document.body.appendChild(el);
+ 
+ setTimeout(() => {
+   if(el.parentNode) el.remove();
+ }, (duration + delay + 0.5) * 1000);
+}
+
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes fallHeart {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(${innerHeight + 100}px) rotate(${360 + Math.random() * 360}deg);
+    opacity: 0;
+  }
+}
+`;
+document.head.appendChild(style);
+
+const scenes = {
+ "0510": [
+  "Знаешь…",
+  "В тот день ты была единственной,\nкто меня поздравил",
+  "С Днём Святого Валентина 💜",
+  "Я это запомнил",
+  "Спасибо тебе",
+  "А это — тебе…"
+ ],
+
+ "1402": [
+  "14 февраля ✨",
+  "Пусть у тебя всё всегда получается",
+  "И пусть рядом будут люди,\nкоторые ценят тебя 💗",
+  "Как эти звёзды — тихо, но верно ✨"
+ ],
+
+ "avdeevvik": [
+  "Этот ник — часть твоей истории",
+  "Твоя цифровая подпись",
+  "Твой маленький след\nв этом мире 💫"
+ ],
+
+ "АркадийПаровозов": [
+  "Иногда мы спасаем мир",
+  "Иногда — друг друга",
+  "Но главное — остаёмся людьми 💜"
+ ]
+};
+
+let currentTexts = [];
+let currentCode = "";
+let lastValidInput = "";
+
+const codeInput = document.getElementById("code");
+const errorHint = document.getElementById("errorHint");
+const inputScene = document.getElementById("inputScene");
+const textScene = document.getElementById("textScene");
+const finalScene = document.getElementById("finalScene");
+const textEl = document.getElementById("text");
+const valentine = document.getElementById("valentine");
+const backBtn = document.getElementById("backBtn");
+const backFromText = document.getElementById("backFromText");
+const finalBg = document.getElementById('finalBg');
+
+codeInput.focus();
+
+codeInput.addEventListener("input", () => {
+ const v = codeInput.value.trim();
+ 
+ if(v.length > 16) {
+   codeInput.value = lastValidInput;
+   return;
+ }
+ 
+ lastValidInput = v;
+ 
+ if(scenes[v]){
+   codeInput.classList.remove("error");
+   errorHint.classList.remove("error");
+   errorHint.textContent = "ищи подсказки ✨";
+   errorHint.style.opacity = "0.6";
+   
+   currentTexts = scenes[v];
+   currentCode = v;
+   inputScene.classList.remove("active");
+
+   setTimeout(() => {
+     if(v === "1402"){
+       createCosmicScene();
+       textScene.classList.add("active");
+       playTexts(0, false);
+     } else if(v === "0510"){
+       textScene.classList.add("active");
+       playTexts(0, true);
+     } else {
+       textScene.classList.add("active");
+       playTexts(0, false);
+     }
+   }, 700);
+ } else if(v.length > 0) {
+   codeInput.classList.add("error");
+   errorHint.classList.add("error");
+   errorHint.textContent = "Неверный код, попробуй ещё раз :)";
+ }
+});
+
+codeInput.addEventListener("keydown", (e) => {
+ if(e.key === "Enter") {
+   const v = codeInput.value.trim();
+   if(!scenes[v] && v.length > 0) {
+     codeInput.classList.add("error");
+     setTimeout(() => {
+       codeInput.classList.remove("error");
+     }, 500);
+   }
+ }
+});
+
+function playTexts(i, isMain){
+ if(i >= currentTexts.length){
+  if(isMain){
+   textScene.classList.remove("active");
+   setTimeout(showFinal, 900);
+  }
+  return;
+ }
+ textEl.textContent = currentTexts[i];
+ textEl.style.opacity = 1;
+
+ setTimeout(() => {
+  textEl.style.opacity = 0;
+  setTimeout(() => playTexts(i+1, isMain), 900);
+ }, 2100);
+}
+
+function showFinal(){
+ clearAllHearts();
+ cleanupCosmicScene();
+ 
+ finalBg.classList.add('active');
+ finalScene.classList.add("active");
+ valentine.style.opacity = 1;
+ 
+ heartInterval = setInterval(() => {
+   if(!finalScene.classList.contains('active')) {
+     clearInterval(heartInterval);
+     heartInterval = null;
+     return;
+   }
+   spawnHeart();
+ }, 300);
+}
+
+function backHome(){
+ clearAllHearts();
+ if(heartInterval) {
+   clearInterval(heartInterval);
+   heartInterval = null;
+ }
+ 
+ cleanupCosmicScene();
+ finalBg.classList.remove('active');
+ 
+ codeInput.classList.remove("error");
+ errorHint.classList.remove("error");
+ errorHint.textContent = "ищи подсказки ✨";
+ errorHint.style.opacity = "0.6";
+ 
+ textScene.classList.remove("active");
+ finalScene.classList.remove("active");
+ 
+ setTimeout(() => {
+  inputScene.classList.add("active");
+  codeInput.value = "";
+  lastValidInput = "";
+  codeInput.focus();
+ }, 700);
+}
+
+backBtn.onclick = backHome;
+backFromText.onclick = backHome;
+
+valentine.onclick = () => {
+ valentine.classList.remove("pulse");
+ void valentine.offsetWidth;
+ valentine.classList.add("pulse");
+ sparkBurst();
+};
+
+function sparkBurst(){
+ for(let i=0; i<25; i++){
+  const s = document.createElement("div");
+  s.className = "spark";
+  s.innerHTML = Math.random() > 0.6 ? "💗" : "✨";
+  const rect = valentine.getBoundingClientRect();
+  s.style.left = (rect.left + rect.width/2) + "px";
+  s.style.top = (rect.top + rect.height/2) + "px";
+  s.style.setProperty("--x", (Math.random()*300 - 150) + "px");
+  s.style.setProperty("--y", (Math.random()*-250 - 80) + "px");
+  s.style.fontSize = (12 + Math.random()*8) + "px";
+  s.style.color = Math.random() > 0.5 ? "#ff9dc4" : "#ffd4e6";
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 1200);
+ }
+}
+</script>
+</body>
+</html>
