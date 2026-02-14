@@ -21,6 +21,7 @@ position:relative;
 transition: background 1.2s ease;
 }
 
+
 .star {
     position: fixed;
     background: white;
@@ -34,6 +35,7 @@ transition: background 1.2s ease;
     0%, 100% { opacity: 0.2; }
     50% { opacity: 0.6; }
 }
+
 
 .nebula {
     position: fixed;
@@ -149,7 +151,7 @@ transition: opacity 0.3s ease;
 font-size:22px;
 line-height:1.45;
 opacity:0;
-transition:opacity 1.2s ease;
+transition:opacity 0.6s ease;
 white-space:pre-line;
 color: #f8e9f3;
 text-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -204,11 +206,21 @@ opacity:.7;
 cursor:pointer;
 transition:.3s;
 color: #e0c5d8;
+opacity: 0;
+transition: opacity 0.4s ease;
 }
 
 .back:hover{
 opacity:1; 
 color: white;
+}
+
+.back.show {
+    opacity: 0.7;
+}
+
+.back.show:hover {
+    opacity: 1;
 }
 
 .spark{
@@ -224,6 +236,7 @@ z-index: 25;
 100%{opacity:0; transform:translate(var(--x),var(--y)) scale(0)}
 }
 
+/* Финальная сцена */
 .final-bg {
     position: fixed;
     top: 0;
@@ -241,6 +254,7 @@ z-index: 25;
     opacity: 1;
 }
 
+/* Космическая сцена для 1402 */
 body.cosmic-scene {
     background: radial-gradient(ellipse at center, #1a0a2e 0%, #0d051a 100%) !important;
 }
@@ -260,6 +274,191 @@ body.cosmic-scene .back {
 
 body.cosmic-scene .back:hover {
     color: #f0e6ff;
+}
+
+/* === СЦЕНА СЕРДЦА ДЛЯ avdeevvik === */
+#heartScene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #120016 !important;
+}
+
+#heartCanvas {
+    display: block;
+    margin: 20px auto;
+    background: transparent;
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(255, 100, 150, 0.3);
+}
+
+.heart-message {
+    text-align: center;
+    font-size: 20px;
+    color: #ffb6c1;
+    margin-top: 25px;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    line-height: 1.5;
+    max-width: 320px;
+    padding: 0 15px;
+}
+
+.heart-message.visible {
+    opacity: 1;
+}
+
+.heart-signature {
+    font-size: 28px;
+    color: #ff6b9d;
+    margin: 15px 0;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.8s cubic-bezier(.34,.9,.3,1);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.heart-signature.visible {
+    opacity: 1;
+    transform: scale(1);
+    text-shadow: 0 0 15px rgba(255, 130, 180, 0.8);
+}
+
+
+#videoScene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #120016 !important;
+    padding: 20px;
+}
+
+.video-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(255, 100, 150, 0.3);
+}
+
+
+@media (max-width: 480px) {
+    .scene {
+        max-width: 95%;
+        padding: 15px;
+    }
+    
+    input {
+        width: 90%;
+        padding: 12px;
+        font-size: 16px;
+        letter-spacing: 1.5px;
+    }
+    
+    .text {
+        font-size: 19px;
+        line-height: 1.4;
+    }
+    
+    .card {
+        width: 90%;
+        height: 160px;
+        font-size: 20px;
+        margin: 30px auto 0;
+    }
+    
+    .card::before {
+        font-size: 22px;
+        top: -20px;
+    }
+    
+    .back {
+        font-size: 13px;
+        margin-top: 18px;
+    }
+    
+    #heartCanvas {
+        width: 90%;
+        height: auto;
+        max-width: 400px;
+    }
+    
+    .heart-signature {
+        font-size: 24px;
+    }
+    
+    .heart-message {
+        font-size: 18px;
+        margin-top: 20px;
+    }
+    
+    .leaf {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .heart {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .spark {
+        font-size: 14px;
+    }
+    
+    .hint {
+        font-size: 13px;
+    }
+    
+    .hint.error {
+        font-size: 14px;
+    }
+    
+    .video-container {
+        padding-bottom: 65%; /* Для телефонов - больше высота */
+    }
+}
+
+@media (max-width: 320px) {
+    .text {
+        font-size: 17px;
+    }
+    
+    .card {
+        height: 140px;
+        font-size: 18px;
+    }
+    
+    .heart-signature {
+        font-size: 20px;
+    }
+    
+    .heart-message {
+        font-size: 16px;
+    }
+    
+    input {
+        font-size: 15px;
+    }
+    
+    .video-container {
+        padding-bottom: 75%;
+    }
 }
 </style>
 </head>
@@ -284,7 +483,31 @@ body.cosmic-scene .back:hover {
 <div class="back" id="backBtn">← вернуться</div>
 </div>
 
+<!-- Сцена сердца для avdeevvik -->
+<div class="scene" id="heartScene">
+    <canvas id="heartCanvas" width="500" height="500"></canvas>
+    <div class="heart-signature" id="heartSignature">avdeevvik</div>
+    <div class="heart-message" id="heartMessage">
+        Этот ник — часть твоей истории,<br>
+        Твоя цифровая подпись,<br>
+        Твой маленький след в этом мире 💫
+    </div>
+    <div class="back" id="backFromHeart">← вернуться</div>
+</div>
+
+<!-- Сцена анимационного ролика для АркадийПаровозов -->
+<div class="scene" id="videoScene">
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/5jJq7y7b2yY?rel=0&modestbranding=1&showinfo=0" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+    </div>
+    <div class="back" id="backFromVideo">← вернуться</div>
+</div>
+
 <script>
+// Создаём лепестки
 const leaves = [];
 for(let i=0; i<8; i++){
  const l=document.createElement("div");
@@ -295,6 +518,15 @@ for(let i=0; i<8; i++){
  l.style.animationDelay = Math.random()*5 + "s";
  leaves.push(l);
  document.body.appendChild(l);
+}
+
+
+function showLeaves() {
+ leaves.forEach(l => l.style.display = 'block');
+}
+
+function hideLeaves() {
+ leaves.forEach(l => l.style.display = 'none');
 }
 
 
@@ -326,6 +558,113 @@ function cleanupCosmicScene() {
  document.body.classList.remove('cosmic-scene');
 }
 
+
+let heartAnimationRunning = false;
+let heartAnimationFrame = null;
+
+function drawValentineHeart() {
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const scale = 10;
+    
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+ 
+    const totalPoints = 2550;
+    const duration = 6000;
+    let startTime = null;
+    
+    function xt(t) {
+        return 16 * Math.pow(Math.sin(t), 3);
+    }
+    
+    function yt(t) {
+        return 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+    }
+    
+   
+    const colors = [
+        {r: 255, g: 107, b: 157},
+        {r: 255, g: 68, b: 102},
+        {r: 221, g: 136, b: 221},
+        {r: 204, g: 102, b: 204},
+        {r: 255, g: 133, b: 181},
+        {r: 238, g: 153, b: 238},
+        {r: 255, g: 170, b: 214},
+        {r: 255, g: 85, b: 153}
+    ];
+    
+ 
+    function animate(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const currentPoint = Math.floor(progress * totalPoints);
+        
+      
+        for (let i = 0; i <= currentPoint; i++) {
+            const t = (i / totalPoints) * 2 * Math.PI;
+            const x = centerX + scale * xt(t);
+            const y = centerY - scale * yt(t);
+
+            const colorIndex = Math.floor((i / totalPoints) * (colors.length - 1));
+            const color = colors[colorIndex];
+            
+     
+            const variation = Math.sin(i * 0.01) * 15;
+            const r = Math.max(0, Math.min(255, color.r + variation));
+            const g = Math.max(0, Math.min(255, color.g + variation * 0.5));
+            const b = Math.max(0, Math.min(255, color.b + variation * 0.8));
+            
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = `rgb(${r}, ${g}, ${b})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+        }
+        
+        if (progress < 1) {
+            heartAnimationFrame = requestAnimationFrame(animate);
+        } else {
+            setTimeout(() => {
+                document.getElementById('heartSignature').classList.add('visible');
+            }, 500);
+            
+            setTimeout(() => {
+                document.getElementById('heartMessage').classList.add('visible');
+            }, 1500);
+            
+            setTimeout(() => {
+                document.getElementById('backFromHeart').classList.add('show');
+            }, 2500);
+        }
+    }
+    
+    heartAnimationFrame = requestAnimationFrame(animate);
+}
+
+function stopHeartAnimation() {
+    if (heartAnimationFrame) {
+        cancelAnimationFrame(heartAnimationFrame);
+        heartAnimationFrame = null;
+    }
+    
+    const canvas = document.getElementById('heartCanvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    document.getElementById('heartSignature').classList.remove('visible');
+    document.getElementById('heartMessage').classList.remove('visible');
+    document.getElementById('backFromHeart').classList.remove('show');
+}
+
+
 let heartInterval = null;
 
 function clearAllHearts() {
@@ -355,14 +694,8 @@ function spawnHeart(){
 const style = document.createElement('style');
 style.innerHTML = `
 @keyframes fallHeart {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(${innerHeight + 100}px) rotate(${360 + Math.random() * 360}deg);
-    opacity: 0;
-  }
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+  100% { transform: translateY(${innerHeight + 100}px) rotate(${360 + Math.random() * 360}deg); opacity: 0; }
 }
 `;
 document.head.appendChild(style);
@@ -378,28 +711,24 @@ const scenes = {
  ],
 
  "1402": [
-  "14 февраля ✨",
-  "Пусть у тебя всё всегда получается",
-  "И пусть рядом будут люди,\nкоторые ценят тебя 💗",
-  "Как эти звёзды — тихо, но верно ✨"
+  "С 14 февраля",
+  "Пусть жизнь дарит тебе лёгкость в каждом шаге,",
+  "А рядом будут те, кто видит твою уникальность",
+  "И ценит тебя — так же бесконечно",
+  "Как ночное небо ценит каждую звезду! ✨"
  ],
 
- "avdeevvik": [
-  "Этот ник — часть твоей истории",
-  "Твоя цифровая подпись",
-  "Твой маленький след\nв этом мире 💫"
- ],
+ "avdeevvik": [],
 
- "АркадийПаровозов": [
-  "Иногда мы спасаем мир",
-  "Иногда — друг друга",
-  "Но главное — остаёмся людьми 💜"
- ]
+ "АркадийПаровозов": [] // 
 };
 
 let currentTexts = [];
 let currentCode = "";
 let lastValidInput = "";
+let isMainScene = false;
+let terminalTimeouts = [];
+let errorTimeout = null;
 
 const codeInput = document.getElementById("code");
 const errorHint = document.getElementById("errorHint");
@@ -410,12 +739,21 @@ const textEl = document.getElementById("text");
 const valentine = document.getElementById("valentine");
 const backBtn = document.getElementById("backBtn");
 const backFromText = document.getElementById("backFromText");
+const heartScene = document.getElementById("heartScene");
+const backFromHeart = document.getElementById("backFromHeart");
+const videoScene = document.getElementById("videoScene");
+const backFromVideo = document.getElementById("backFromVideo");
 const finalBg = document.getElementById('finalBg');
 
 codeInput.focus();
 
 codeInput.addEventListener("input", () => {
  const v = codeInput.value.trim();
+ 
+ if(errorTimeout) {
+   clearTimeout(errorTimeout);
+   errorTimeout = null;
+ }
  
  if(v.length > 16) {
    codeInput.value = lastValidInput;
@@ -424,33 +762,58 @@ codeInput.addEventListener("input", () => {
  
  lastValidInput = v;
  
+ backFromText.classList.remove('show');
+ backBtn.classList.remove('show');
+ backFromHeart.classList.remove('show');
+ backFromVideo.classList.remove('show');
+ 
+ codeInput.classList.remove("error");
+ errorHint.classList.remove("error");
+ errorHint.textContent = "ищи подсказки ✨";
+ errorHint.style.opacity = "0.6";
+ 
  if(scenes[v]){
-   codeInput.classList.remove("error");
-   errorHint.classList.remove("error");
-   errorHint.textContent = "ищи подсказки ✨";
-   errorHint.style.opacity = "0.6";
-   
    currentTexts = scenes[v];
    currentCode = v;
+   isMainScene = (v === "0510");
    inputScene.classList.remove("active");
 
    setTimeout(() => {
      if(v === "1402"){
+      
+       hideLeaves();
        createCosmicScene();
        textScene.classList.add("active");
-       playTexts(0, false);
+       playTexts(0);
+     } else if(v === "avdeevvik"){
+     
+       hideLeaves();
+       heartScene.classList.add("active");
+       setTimeout(() => {
+         drawValentineHeart();
+       }, 300);
+     } else if(v === "АркадийПаровозов"){
+       
+       hideLeaves();
+       videoScene.classList.add("active");
      } else if(v === "0510"){
+    
+       showLeaves();
        textScene.classList.add("active");
-       playTexts(0, true);
+       playTexts(0);
      } else {
+       // Для других сцен скрываем лепестки
+       hideLeaves();
        textScene.classList.add("active");
-       playTexts(0, false);
+       playTexts(0);
      }
    }, 700);
  } else if(v.length > 0) {
-   codeInput.classList.add("error");
-   errorHint.classList.add("error");
-   errorHint.textContent = "Неверный код, попробуй ещё раз :)";
+   errorTimeout = setTimeout(() => {
+     codeInput.classList.add("error");
+     errorHint.classList.add("error");
+     errorHint.textContent = "Неверный код, попробуй ещё раз :)";
+   }, 1000);
  }
 });
 
@@ -458,29 +821,52 @@ codeInput.addEventListener("keydown", (e) => {
  if(e.key === "Enter") {
    const v = codeInput.value.trim();
    if(!scenes[v] && v.length > 0) {
+     if(errorTimeout) {
+       clearTimeout(errorTimeout);
+       errorTimeout = null;
+     }
+     
      codeInput.classList.add("error");
+     errorHint.classList.add("error");
+     errorHint.textContent = "Неверный код, попробуй ещё раз :)";
+     
      setTimeout(() => {
        codeInput.classList.remove("error");
-     }, 500);
+       errorHint.classList.remove("error");
+       errorHint.textContent = "ищи подсказки ✨";
+     }, 1500);
    }
  }
 });
 
-function playTexts(i, isMain){
+
+function playTexts(i){
  if(i >= currentTexts.length){
-  if(isMain){
-   textScene.classList.remove("active");
-   setTimeout(showFinal, 900);
-  }
-  return;
+   if(isMainScene){
+     textScene.classList.remove("active");
+     setTimeout(showFinal, 1200);
+   } else {
+     setTimeout(() => {
+       backFromText.classList.add('show');
+     }, 800);
+   }
+   return;
  }
+ 
+
  textEl.textContent = currentTexts[i];
  textEl.style.opacity = 1;
+ 
 
  setTimeout(() => {
-  textEl.style.opacity = 0;
-  setTimeout(() => playTexts(i+1, isMain), 900);
- }, 2100);
+  
+   textEl.style.opacity = 0;
+   
+
+   setTimeout(() => {
+     playTexts(i+1);
+   }, 600);
+ }, 3500);
 }
 
 function showFinal(){
@@ -490,6 +876,13 @@ function showFinal(){
  finalBg.classList.add('active');
  finalScene.classList.add("active");
  valentine.style.opacity = 1;
+ 
+
+ hideLeaves();
+ 
+ setTimeout(() => {
+   backBtn.classList.add('show');
+ }, 800);
  
  heartInterval = setInterval(() => {
    if(!finalScene.classList.contains('active')) {
@@ -509,7 +902,24 @@ function backHome(){
  }
  
  cleanupCosmicScene();
+ terminalTimeouts.forEach(t => clearTimeout(t));
+ terminalTimeouts = [];
+ 
+ if(errorTimeout) {
+   clearTimeout(errorTimeout);
+   errorTimeout = null;
+ }
+ 
+ stopHeartAnimation();
+ 
  finalBg.classList.remove('active');
+ heartScene.classList.remove('active');
+ videoScene.classList.remove('active');
+ 
+ backFromText.classList.remove('show');
+ backBtn.classList.remove('show');
+ backFromHeart.classList.remove('show');
+ backFromVideo.classList.remove('show');
  
  codeInput.classList.remove("error");
  errorHint.classList.remove("error");
@@ -524,11 +934,15 @@ function backHome(){
   codeInput.value = "";
   lastValidInput = "";
   codeInput.focus();
+ 
+  showLeaves();
  }, 700);
 }
 
 backBtn.onclick = backHome;
 backFromText.onclick = backHome;
+backFromHeart.onclick = backHome;
+backFromVideo.onclick = backHome;
 
 valentine.onclick = () => {
  valentine.classList.remove("pulse");
@@ -555,5 +969,4 @@ function sparkBurst(){
 }
 </script>
 </body>
-
 </html>
